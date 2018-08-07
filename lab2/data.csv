@@ -1,0 +1,11 @@
+PatientID,Age,Gender,TumorSize,HasCancer
+101,54,Male,1.2,TRUE
+102,40,Female,3.5,TRUE
+103,24,Female,1.1,FALSE
+104,32,Male,2.4,FALSE
+105,38,Male,5.1,FALSE
+106,52,Male,0.8,FALSE
+107,59,Female,1.2,FALSE
+108,60,Male,3.2,TRUE
+109,,Female,4.1,FALSE
+110,45,Female,4.8,TRUE
