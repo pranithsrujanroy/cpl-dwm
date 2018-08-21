@@ -108,6 +108,6 @@ while itemset:
             itemset.add(candidate)
             #print(candidate)
             confidence[candidate] = count
-
+print(previous_itemset)
 print_rules(previous_itemset,min_confidence_count)
 

@@ -40,7 +40,7 @@ for record in data_list:
     element = set()
 
 N = len(transactions) #total number of transactions
-min_support = 0.5 
+min_support = 0 
 min_conf = 0.5
 min_support_freq = N * min_support
 min_confidence_count = N * min_conf
@@ -107,7 +107,9 @@ def print_rules(itemset,min_confidence_count):
 #Line 2
 itemset = find_frequent_items(transactions,min_support)
 #apriori algorithm
-while itemset:    
+flag = 0
+while itemset: 
+    flag = flag + 1
     new_itemset = cartesian_product(itemset)
     previous_itemset = itemset 
     itemset = set()
@@ -121,5 +123,8 @@ while itemset:
             itemset.add(candidate)
             #print(candidate)
             confidence[candidate] = count
-
-print_rules(previous_itemset,min_confidence_count)
+    #print(previous_itemset)
+if flag > 1:
+    print_rules(previous_itemset,min_confidence_count)
+elif flag == 1:
+    print('No rules generated! No set has confidence above minimum confidence.')

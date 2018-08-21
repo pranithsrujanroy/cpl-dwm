@@ -4,6 +4,7 @@
 import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
 dataset = [['A','B','C','D'],
            ['A','C','D',],
            ['A','B','C'],
@@ -19,4 +20,6 @@ df = pd.DataFrame(te_ary, columns=te.columns_)
 "print(apriori(df, min_support=0.6, use_colnames=True))"
 
 val = apriori(df, min_support=0.5, use_colnames=True)
+asr = association_rules(val, metric="confidence", min_threshold=0)
 print(val)
+print(asr)
