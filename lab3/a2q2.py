@@ -1,41 +1,44 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Aug 14 15:07:06 2018
+Created on Tue Aug 21 14:05:44 2018
 
 @author: Student
-STATUS : COMPLETE
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug 14 13:31:31 2018
-
-@author: kirito
+STATUS : IN PROGRESS
 
 Assignment 2
-1. Find the rules with support 0.5 and confidence 0.5 in the following databases using Apriori algorithm.
-
-------------------
-TID | Transaction
-------------------
-1   | ABCD
-2   | ACD
-3   | ABC
-4   | BCD
-5   | ABC
-6   | ABC
-7   | CDE
-8   | AC
-------------------
+2. Find association rules using apriori algorithm for the data given in a2q2_data.csv with support > 0.5 and confidence > 0.5
 """
-#ref1 : https://www3.cs.stonybrook.edu/~cse634/lecture_notes/07apriori.pdf
-#ref2 : http://software.ucv.ro/~cmihaescu/ro/teaching/AIR/docs/Lab8-Apriori.pdf
 
-#assumption: each item cqn appear 0 or 1 time in a transaction
-
+import csv #for importing csv data file
 from itertools import combinations #for print_rules method
 
-transactions = ['ABCD','ACD', 'ABC', 'BCD', 'ABC', 'ABC', 'CDE', 'AC']
+
+#Read the CSV file into the python environment
+data_list = []
+with open('a2q2_data.csv', 'rt') as csvfile:   
+    read_obj = csv.reader(csvfile, delimiter = ',')
+    for row in read_obj:
+        data_list.append(row)
+    field_headings = data_list[0]
+    data_list.remove(data_list[0])
+
+#print raw data
+print(field_headings)
+for record in data_list:
+    print(record)
+
+#convert table to transaction records
+transactions = []
+i = 1
+element = set()
+for record in data_list:
+    for i in range(1,5):
+        if record[i] == '1':
+            element.add(i)
+    key = ''.join(str(i) for i in element)
+    transactions.append(key)
+    element = set()
+
 N = len(transactions) #total number of transactions
 min_support = 0.5 
 min_conf = 0.5
@@ -80,16 +83,26 @@ def cartesian_product(this_set):
                 next_set.add(element)
     return next_set
 
+def objectify(x):
+    obj_list = []
+    for e in x:
+        for i in range(1,5):
+            if str(e) == str(i):
+                obj_list.append(field_headings[i])
+    return obj_list
+
 def print_rules(itemset,min_confidence_count):
     final_freq_elements = list(''.join(str(x) for x in(set(itemset))))
     final_set = set(final_freq_elements)
+    final_obj_set = set(objectify(list(final_set)))
     for i in range(len(final_freq_elements) -1) :
         comb = combinations(final_freq_elements,i+1)
         for rule in (comb):
             lhs_key = (''.join(str(x) for x in((rule))))
             rule_conf =  (min_support_freq / confidence[lhs_key])
             if( rule_conf > min_conf):
-                print(set(rule), "->", final_set - set(rule), rule_conf)
+                obj_rule = objectify(rule)
+                print(set(obj_rule), "->", final_obj_set - set(obj_rule), rule_conf)
 
 #Line 2
 itemset = find_frequent_items(transactions,min_support)
@@ -110,4 +123,3 @@ while itemset:
             confidence[candidate] = count
 
 print_rules(previous_itemset,min_confidence_count)
-

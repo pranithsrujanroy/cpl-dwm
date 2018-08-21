@@ -3,6 +3,8 @@
 Created on Tue Aug 14 13:31:31 2018
 
 @author: kirito
+STATUS : ABORTED
+REMARKS : Set method is better suited for this problem. Please see a2q1_set.py
 
 Assignment 2
 1. Find the rules with support 0.5 and confidence 0.5 in the following databases using Apriori algorithm.
