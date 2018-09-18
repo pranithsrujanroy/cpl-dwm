@@ -68,7 +68,28 @@ def predict(record,nearest_neighbours,labels):
         k_distance_list.append(record_distance(record,neighbour))
     k_dist_max = max(k_distance_list)
     k_dist_min = min(k_distance_list)
-    values = [0.0,0.0,0.0,0.0,0.0]
+    values = [0,0,0,0,0]
+    for neighbour,label in zip(nearest_neighbours,labels):
+        values[label] = values[label] + 1
+        if(k_dist_max == k_dist_min):
+            values[label] = values[label] + 1
+        else:
+            values[label] = values[label] + 1#(k_dist_max - record_distance(record,neighbour) ) / (k_dist_max - k_dist_min)
+    #print(values)
+    pred_label = values.index(max(values))
+    #print(pred_label)
+    return pred_label
+
+def modified_knn_predict(record,nearest_neighbours,labels):
+    #print(nearest_neighbours)
+    #nearest_neighbours = testing_data[1:40]
+    #labels = testing_data_labels[1:40]
+    k_distance_list = []
+    for neighbour in nearest_neighbours:
+        k_distance_list.append(record_distance(record,neighbour))
+    k_dist_max = max(k_distance_list)
+    k_dist_min = min(k_distance_list)
+    values = [0,0,0,0,0]
     for neighbour,label in zip(nearest_neighbours,labels):
         values[label] = values[label] + 1
         if(k_dist_max == k_dist_min):
@@ -79,3 +100,15 @@ def predict(record,nearest_neighbours,labels):
     pred_label = values.index(max(values))
     #print(pred_label)
     return pred_label
+
+def centroid(records):
+    record_len = len(records[0])
+    sum = [0 for i in range(record_len)]
+    for record in records:
+        for val,i in zip(record,range(0,record_len)):
+            sum[i] = sum[i] + val
+    centroid = []
+    for i in range(0,record_len):
+        centroid.append(sum[i]/len(records))
+        
+    return centroid

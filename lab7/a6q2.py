@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 11 13:29:39 2018
+Created on Tue Sep 18 13:39:27 2018
 
 @author: Student
-Assignment 5
-1. Find a suitable value of k for a given dataset " CAR EVALUATION DATASET". Use the obtained K-value for developing KNN Classifier.
-Report the classification accuracy.
+Assignment 6
+1. Implement Modified K-Nearest Neighbour.
+Input : IRIS and Car Evaluation Dataset
+Output : Classification Accuracy
 """
+
 
 import csv #for importing csv data file
 import helper_functions
@@ -22,6 +24,7 @@ with open('../lab5/data.txt', 'rt') as csvfile:
 print("Attribute headings are : ",field_headings)
 complete_data = data_list
 
+
 #PREPROCESSING DATA AND SHUFFLING
 clean_data = pre_process_data(data_list)
 import random
@@ -29,7 +32,7 @@ clean_data_shuffled = clean_data
 random.shuffle(clean_data_shuffled)
 
 TOTAL_RECORDS = len(clean_data)
-TRAINING_SIZE = int(0.6 * TOTAL_RECORDS)
+TRAINING_SIZE = int(0.7 * TOTAL_RECORDS)
 TESTING_SIZE = TOTAL_RECORDS - TRAINING_SIZE
 print("TRAINING SIZE: ",TRAINING_SIZE, " TESTING SIZE : ",TESTING_SIZE)
 
@@ -48,24 +51,21 @@ for record in testing_data_list:
     testing_data_labels.append(record[6])
 
 error_matrix = []
-for k in range(1,20):
-    correct_classified = 0
-    incorrect_classified = 0
-    error = 0
-    for record,label in zip(testing_data,testing_data_labels):
-        nearest_neighbours,labels = k_nearest_neighbours(record,k,training_data,training_data_labels)
-        if(predict(record,nearest_neighbours,labels) == label):
-            correct_classified = correct_classified + 1
-            #print("S")
-        else:
-            incorrect_classified = incorrect_classified + 1
-            #print("F")
-    error = incorrect_classified / (correct_classified + incorrect_classified)
-    error_matrix.append(error)
-    print(k,error)
-#print(error_matrix)
+k = 1
+correct_classified = 0
+incorrect_classified = 0
+error = 0
+for record,label in zip(testing_data,testing_data_labels):
+    nearest_neighbours,labels = k_nearest_neighbours(record,k,training_data,training_data_labels)
+    if(modified_knn_predict(record,nearest_neighbours,labels) == label):
+        correct_classified = correct_classified + 1
+        #print("S")
+    else:
+        incorrect_classified = incorrect_classified + 1
+        #print("F")
+error = incorrect_classified / (correct_classified + incorrect_classified)
+error_matrix.append(error)
+#print(k,error)
 
-#import matplotlib.pylot as plt
-plt.xlabel("k")
-plt.ylabel("error")
-plt.plot(error_matrix)
+print("\nAccuracy with MODIFIED KNN on CAR EVALUATION DATASET : ",1-error)
+
