@@ -26,4 +26,5 @@
 ### Lab 8
 * K-means clustering
 
+## Learning resources:
 https://www-users.cs.umn.edu/~kumar001
