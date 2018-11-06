@@ -33,3 +33,5 @@
 
 ## Learning resources:
 https://www-users.cs.umn.edu/~kumar001
+
+http://www.svcl.ucsd.edu/courses/ece271B-F09/handouts/Dimensionality2.pdf
