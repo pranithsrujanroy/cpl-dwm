@@ -25,6 +25,11 @@
 * Modified Nearest Neighbour
 ### Lab 8
 * K-means clustering
+### Lab 9
+* Dendogram
+### Lab 10
+* Bisecting Kmeans
+* DBSCAN
 
 ## Learning resources:
 https://www-users.cs.umn.edu/~kumar001
