@@ -21,13 +21,14 @@ import scipy.cluster.hierarchy as shc
 import matplotlib.pyplot as plt  
 plt.figure(figsize=(10, 7))  
 plt.title("Iris Dendograms")  
-dend = shc.dendrogram(shc.linkage(X, method='ward'))
+dend = shc.dendrogram(shc.linkage(X, method='ward'),orientation='top',color_threshold=10,truncate_mode='lastp',p=10)
+plt.axhline(y=10, c='k')
 plt.plot(0,10,'r--')
 plt.show()
 
 from sklearn.cluster import AgglomerativeClustering
 
-cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='ward')  
+cluster = AgglomerativeClustering(n_clusters=3 , affinity='euclidean', linkage='ward')  
 cluster.fit_predict(X) 
 #print(cluster.labels_)
 
